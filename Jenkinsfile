@@ -1,6 +1,12 @@
 pipeline {
     agent any
 
+    environment {
+        imagename = "dockerJenkins"
+        registryCredential = ''
+        dockerImage = ''
+    }
+
     stages {
         stage('clone') {
             steps {
@@ -43,7 +49,12 @@ pipeline {
         stage('finish') {
             steps {
                 sh "docker stop pybuild || true && docker rm pybuild || true"
-                echo ""
+                echo "Done"
+            }
+        }
+        stage('build image') {
+            steps {
+                dockerImage = docker.build(imagename,"-f pythonTest/Dockerfile .")
             }
         }
     }
