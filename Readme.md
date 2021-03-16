@@ -1,14 +1,14 @@
-#Guide to study Jenkins
+# Guide to study Jenkins
 
-##Some docker command to 
-
+## Some docker command to support 
+```
 docker run -d -p 8080:8080 --name=jenkins-master \
 	-v /var/run/docker.sock:/var/run/docker.sock \
 	-v /home/test/jenkins:/home/test/jenkins \
 	-u root \
 	jenkins/jenkins
-
-
+```
+```
 docker run -d \
 	--name=jenkins-master \
 	-v /var/run/docker.sock:/var/run/docker.sock \
@@ -22,55 +22,46 @@ docker run -d \
 	jenkins/jenkins:2.277.1-lts-jdk11
 
 ###This one is prefered with priviledge
-
+```
+```
 docker run -d -p 8080:8080 --name=jenkins-master \
 	-v /var/run/docker.sock:/var/run/docker.sock \
 	-v /home/test/jenkins:/home/test/jenkins \
 	jenkins/jenkins
+```
+### Then you can remove jenkins when you want
 
-###Then you can remove when you want
+`docker rm -f jenkins-master`
 
-docker rm -f jenkins-master
+### Other comamnds to supports
 
-###Other comamnds to supports
+`docker exec -it jenkins-master bash`
 
-docker exec -it jenkins-master bash
+`docker exec -it -u root jenkins-master bash`
 
-docker exec -it -u root jenkins-master bash
+### To get the admin password:
 
-###To get the admin password:
+`docker exec jenkins-master cat /var/jenkins_home/secrets/initialAdminPassword`
 
-docker exec jenkins-master cat /var/jenkins_home/secrets/initialAdminPassword
-
-###If the main screen is logged out, lets login by this waym
+### If the main screen is logged out, lets login by this waym
 
 login: admin
 
 password: $(docker exec jenkins-master cat /var/jenkins_home/secrets/initialAdminPassword)
 
-#Configure in Jenskin
+# Configure in Jenskin
 
-##Start with set up recommended plugins
+## Start with set up recommended plugins
 
-##Copy all needed files to jenkins
+## Copy all needed files to jenkins
+`scp -r /Users/vanthanhle/Desktop/Tools/jenkins test@10.10.21.108:/home/test/`
 
-scp -r /Users/vanthanhle/Desktop/Tools/jenkins test@10.10.21.108:/home/test/
+## Work with Git SSH
 
-
-##Work with Git SSH
-
-Make ssh keys:
-
-https://8gwifi.org/sshfunctions.jsp
-
+Make ssh keys: https://8gwifi.org/sshfunctions.jsp
 Go there and generate a key with public key and private key
-
-Then go to your git:
-
-https://github.com/settings/profile
-
+Then go to your git: https://github.com/settings/profile
 Choose SSH and GPG keys, then New SSH Keys, paste the public key there
-
 Now, back to Jenkins, Manage Jenkins, Credentials at:
 
 http://10.10.21.108:8080/credentials/
@@ -82,11 +73,9 @@ In the form :
 Kind > SSH Username with private key
 
 ID > "gittest"
-
 Username > "levanthanh3005"
-
 Private Key > Add > Paste private key here:
-
+```
 -----BEGIN RSA PRIVATE KEY-----
 MIIEogIBAAKCAQEAhJkMm4YqDibtUHfG240xSEiBV0PwQpLcFEndarkLtEiLEgZ8
 D+UTx9wGkxton/XugfPZr93FC73rt7LsjFnG2Ax+Xs774JbW/CyQUcLvwVMA5N3O
@@ -114,33 +103,35 @@ oAYzAoGAHDi5IHshXXUr21NQlid1rbPqn76iSq/Pp5+FH64yf+OOqqgA7l2AtNpI
 QLLgzKpl2BHL0uCeUqeYnSX+1/GN2avi7TYw2UYaOrjggwR+hNO42mq+xNeUQCbU
 cRKe/BUcgqfB2mOuS0aMlPfnrXx0SNX4mD0goJ+HBIXNrgfAW4g=
 -----END RSA PRIVATE KEY-----
-
+```
 
 Then click Ok
-
 Now, back to Jenkins home > New Item > Paste the Jenkinsfile into the configuration
-
-##For Docker
+## For Docker
 Go to /home/test/jenkins, run setupDocker.sh
 
 Then go to manage plugin and install docker plugins
 
-More infor with docker build: https://dzone.com/articles/building-docker-images-to-docker-hub-using-jenkins
+More infor with docker build: 
+https://dzone.com/articles/building-docker-images-to-docker-hub-using-jenkins
 
 #For testing locally docker container
 
-scp -r /Users/vanthanhle/Desktop/Tools/jenkins test@10.10.21.108:/home/test/
+`scp -r /Users/vanthanhle/Desktop/Tools/jenkins test@10.10.21.108:/home/test/`
 
+```
 docker run -it --rm \
 --name pybuild \
 -v /home/test/jenkins/pythonTest:/todo \
 -w /todo \
 -p 5000:80 \
 python bash 
-
+```
+```
 docker run -it --rm \
 --name pytest \
 -v /home/test/jenkins/pythonTest:/todo \
 -w /todo \
 --network host \
 python bash 
+```
