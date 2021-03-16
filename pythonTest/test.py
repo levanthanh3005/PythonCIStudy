@@ -40,10 +40,10 @@ def test_post():
 	url = 'http://0.0.0.0:5000/testpost'
 	myobj = {'somekey': 'somevalue'}
 
-	res = requests.post(url, data = myobj).text
+	res = requests.post(url, json = myobj).text
 	print("\ntest_post:")
-	print(res)
+	# print(res)
 
 	assert(res == "Hello somevalue")
 
-# test_hello();
+# test_post();

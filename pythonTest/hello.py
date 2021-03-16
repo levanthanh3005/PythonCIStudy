@@ -20,10 +20,10 @@ def get_params(test_id):
 
 @app.route('/testpost',methods=['POST'])
 def testpost():
-	value = request.args.get('somekey')
+	value = request.json['somekey']
 
-	print(request.args)
-	
+	# print(value)
+
 	return "Hello "+value
 
 if __name__ == "__main__": 
