@@ -56,9 +56,8 @@ pipeline {
     stages {
     	stage('clone') {
             steps {
-                sh "git clone https://github.com/levanthanh3005/PythonCIStudy.git"
-                sh "pwd"
-                sh "ls -a"
+                git branch: 'main',credentialsId: 'gittest',url: 'git@github.com:levanthanh3005/PythonCIStudy.git'
+                sh "ls -lat"
             }
         }
         stage('build') {
@@ -121,7 +120,8 @@ pipeline {
     stages {
     	stage('clone') {
             steps {
-                git branch: 'master',credentialsId: 'gittest',url: 'git@github.com:levanthanh3005/PythonCIStudy.git'
+                git branch: 'main',credentialsId: 'gittest',url: 'git@github.com:levanthanh3005/PythonCIStudy.git'
+                sh "pwd"
                 sh "ls -lat"
             }
         }
