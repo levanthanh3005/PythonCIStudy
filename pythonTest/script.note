@@ -54,13 +54,20 @@ pipeline {
     agent any
 
     stages {
+    	stage('clone') {
+            steps {
+                sh "git clone https://github.com/levanthanh3005/PythonCIStudy.git"
+                sh "pwd"
+                sh "ls -a"
+            }
+        }
         stage('build') {
             steps {
                 sh "docker stop pybuild || true && docker rm pybuild || true"
                 sh """
 					docker run -d \
 						--name pybuild \
-						-v /home/test/jenkins/pythonTest:/todo \
+						-v $(pwd)/PythonCIStudy/pythonTest:/todo \
 						-w /todo \
 						-p 5000:80 \
 						python bash -c 'pip install flask && python hello.py'
@@ -78,7 +85,7 @@ pipeline {
                 sh """
 					docker run -t --rm \
 						--name pytest \
-						-v /home/test/jenkins/pythonTest:/todo \
+						-v $(pwd)/PythonCIStudy/pythonTest:/todo \
 						-w /todo \
 						--network host \
 						python bash -c 'pip install requests pytest && pytest -s test.py'
@@ -93,3 +100,59 @@ pipeline {
         }
     }
 }
+
+pipeline {
+    agent any
+
+    stages {
+    	stage('clone') {
+            steps {
+                sh "git clone https://github.com/levanthanh3005/PythonCIStudy.git"
+                sh "pwd"
+                sh "ls -a"
+            }
+        }
+    }
+}
+
+pipeline {
+    agent any
+
+    stages {
+    	stage('clone') {
+            steps {
+                git branch: 'master',credentialsId: 'gittest',url: 'git@github.com:levanthanh3005/PythonCIStudy.git'
+                sh "ls -lat"
+            }
+        }
+    }
+}
+
+
+-----BEGIN RSA PRIVATE KEY-----
+MIIEogIBAAKCAQEAhJkMm4YqDibtUHfG240xSEiBV0PwQpLcFEndarkLtEiLEgZ8
+D+UTx9wGkxton/XugfPZr93FC73rt7LsjFnG2Ax+Xs774JbW/CyQUcLvwVMA5N3O
+P/Nc4R9n6hTqXEUNQ44LMkSJIJ/MOA/I4pv0Omw/OV/9rQXjrNlo9YwkM9Wqyguy
+cVYxJXgxXJOvgYdj3J4HfVhsEIuJtn3mVFrZtb/bj8dVxaO9ddaP6hLv5ViqUPpO
+BtNo2NMm28stXZ8WXQISYnv96Vl41ZOkogxhumq3NVMRx3BVtUc5hbOv7w81Fekz
+BkNta8SDZwmlgBW5mEe+WVghWfysThB0mHNEdQIDAQABAoIBAGmKeKKB04+YJGRc
+MggnBgcGzwxqox4aTtpHQNnlmA9Tfn5GcxEjwO7fjswgkNJhqgn90lNNLb3+2VRK
+MkY0XzUwHJXSImHNLiliPy0VAEjcjGWetr/oMRFvMgL7yt7Oh5Qxx2+nZY52ItKs
+nbThdS/bYSeF5CCIA4RdOFHZzicC0a7HL9d1iC/M3Di4ReAcdY983500FMAYmhBU
+0/l7t+mXcZVXdzcdqUX8DcmXsXK7gC/qrQ3HtyOQVwh70dg5jtYCb2hvnYse9mpp
+tWB+CxSQCfOSZsR0NMXu1gIj7MzlmiQPHXujobnSx+8O225cPYss0W8yQSN+gHJR
+CD++3jECgYEAusoJvV2+33Gf6ltAlIs3CQuAbdUj61a8mWPwTOhOC7WWOvU4LCX4
+QNcohgbUEA5Cc9ugHASibD/dzjF1tGwp4qoMKgqzgAtySPDujDlRMulw4LzutvD5
+jFJy1s7dssHhv0S7iXSGIIS7y1q3/7Kug3Jtn2bnfopL3XQfINmlIAMCgYEAtbqr
+N6ZcXu1HOm8YatYby8U6L72poLj1JgbTEdzjFU+6TrOuVTrTADlIRpiunYRM/KFP
+c+fS7tcSTt2iPEj5GmrQCJnnNBobZXo1Uiajc6q9gFB7T5hbxOthbidoH3J2CdyE
+wT/qHCIoh/vf5Z1jioWtEO5Mq+Q+1Y+YWX5DzCcCgYBWpxG7orjAqdKZAvpDrw26
+CXbr/Pvr2lImCsHYu9AxCG2ILmh/uqGfWvE2tAY+6I6Vduag+NlsxHgehr1nFOKd
+f2ujOVGqbiT3h6XysUhlCPzPlXZcsg/itAEIe/FHU0Bp3fXuP3tVrJ3+KbjAS2FA
+I56NW0y7XGbzdkJWmAFNhwKBgGBIxdyXTQuShhGkuPgp9tIw7hJLV+tq86AxL3Wg
+ZcRt2JVISA6qOw88Sln1HVchuLSFNxZ+9lhLJU0ZypJMS4c+nnhgKoqFZoyOgl/D
+TwjCpuKsQZk7bSvZVmbJhDZdK8MvzjqhhYVgZ78cqVT73biP+NEmoQLVzKDUEvEf
+oAYzAoGAHDi5IHshXXUr21NQlid1rbPqn76iSq/Pp5+FH64yf+OOqqgA7l2AtNpI
+QLLgzKpl2BHL0uCeUqeYnSX+1/GN2avi7TYw2UYaOrjggwR+hNO42mq+xNeUQCbU
+cRKe/BUcgqfB2mOuS0aMlPfnrXx0SNX4mD0goJ+HBIXNrgfAW4g=
+-----END RSA PRIVATE KEY-----
