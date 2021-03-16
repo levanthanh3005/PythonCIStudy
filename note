@@ -1,0 +1,46 @@
+docker run -d -p 8080:8080 --name=jenkins-master \
+	-v /var/run/docker.sock:/var/run/docker.sock \
+	-v /home/test/jenkins:/home/test/jenkins \
+	-u root \
+	jenkins/jenkins
+
+docker run -d \
+	--name=jenkins-master \
+	-v /var/run/docker.sock:/var/run/docker.sock \
+	-v /home/test/jenkins:/home/test/jenkins \
+	-u root \
+    --privileged \
+    --cap-add=NET_ADMIN \
+    --net host \
+    --pid=host \
+	jenkins/jenkins:2.277.1-lts-jdk11
+
+
+docker run -d -p 8080:8080 --name=jenkins-master \
+	-v /var/run/docker.sock:/var/run/docker.sock \
+	-v /home/test/jenkins:/home/test/jenkins \
+	jenkins/jenkins
+
+
+docker rm -f jenkins-master
+
+scp -r /Users/vanthanhle/Desktop/Tools/jenkins test@10.10.21.108:/home/test/
+
+For password:
+docker exec jenkins-master cat /var/jenkins_home/secrets/initialAdminPassword
+
+docker exec -it jenkins-master bash
+
+login: admin
+password: $(docker exec jenkins-master cat /var/jenkins_home/secrets/initialAdminPassword)
+
+docker exec -it -u root jenkins-master bash
+docker exec -it jenkins-master bash
+
+
+docker run -dt \
+	--name pytest \
+	-v /home/test/jenkins/pythonTest:/todo \
+	-w /todo \
+	-p 5000:80 \
+	python bash -c "pip install flask && python hello.py"
