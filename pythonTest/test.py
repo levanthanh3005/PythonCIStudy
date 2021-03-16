@@ -26,4 +26,13 @@ def test_hello_2():
     # print(text)
     assert(text == 'Hello Python 2')
 
+def test_get_params():
+    """
+    Asserts current_user_url is a key in the base Github API GET result JSON
+    """
+    print("\ntest_get_params")
+    text = requests.get('http://0.0.0.0:5000/getparams/1').text
+    # print(text)
+    assert(text == 'Hello 1')
+
 # test_hello();

@@ -2,7 +2,7 @@ pipeline {
     agent any
 
     environment {
-        imagename = "dockerJenkins"
+        imagename = "dockerjenkins"
         registryCredential = ''
         dockerImage = ''
     }
@@ -54,7 +54,23 @@ pipeline {
         }
         stage('build image') {
             steps {
-                dockerImage = docker.build(imagename,"-f pythonTest/Dockerfile .")
+                dir("pythonTest") {
+                    script {
+                        dockerImage = docker.build imagename + " -f Dockerfile"
+                    }
+                }
+            }
+        }
+
+        stage('deploy production') {
+            steps {
+                sh "docker stop pyproduction || true && docker rm pyproduction || true"
+                sh """
+                    docker run -d \
+                        --name pyproduction \
+                        -p 5001:80 \
+                        $imagename
+                """
             }
         }
     }

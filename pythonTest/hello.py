@@ -7,12 +7,17 @@ app = Flask(__name__)
 
 @app.route('/')
 def index():
- return "Hello Python"
+	return "Hello Python"
 
 
 @app.route('/hello2')
 def index2():
- return "Hello Python 2"
+	return "Hello Python 2"
+
+@app.route('/getparams/<int:test_id>',methods=['GET','POST'])
+def get_params(test_id):
+	return "Hello "+test_id
+
 
 if __name__ == "__main__": 
  app.run(host='0.0.0.0', port=80, debug=True)

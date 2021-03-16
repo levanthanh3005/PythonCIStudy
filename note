@@ -119,3 +119,10 @@ cRKe/BUcgqfB2mOuS0aMlPfnrXx0SNX4mD0goJ+HBIXNrgfAW4g=
 Then click Ok
 
 Now, back to Jenkins home > New Item > Paste the Jenkinsfile into the configuration
+
+##For Docker
+Go to /home/test/jenkins, run setupDocker.sh
+
+Then go to manage plugin and install docker plugins
+
+More infor with docker build: https://dzone.com/articles/building-docker-images-to-docker-hub-using-jenkins
