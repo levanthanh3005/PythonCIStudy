@@ -18,7 +18,7 @@ def index2():
 def get_params(test_id):
 	return "Hello "+str(test_id)
 
-@app.route('/testpost')
+@app.route('/testpost',methods=['POST'])
 def testpost():
 	value = request.args.get('somekey')
 
