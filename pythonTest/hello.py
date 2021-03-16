@@ -22,6 +22,8 @@ def get_params(test_id):
 def testpost():
 	value = request.args.get('somekey')
 
+	print(request.args)
+	
 	return "Hello "+value
 
 if __name__ == "__main__": 
