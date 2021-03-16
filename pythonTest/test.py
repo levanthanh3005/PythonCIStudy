@@ -35,4 +35,12 @@ def test_get_params():
     # print(text)
     assert(text == 'Hello 1')
 
+def test_post():
+	print("\ntest_post")
+	url = 'http://0.0.0.0:5000/testpost'
+	myobj = {'somekey': 'somevalue'}
+
+	res = requests.post(url, data = myobj)
+	assert(res == "Hello somevalue")
+
 # test_hello();

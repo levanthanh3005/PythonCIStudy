@@ -18,6 +18,11 @@ def index2():
 def get_params(test_id):
 	return "Hello "+test_id
 
+@app.route('/testpost')
+def testpost():
+	value = request.args.get('somekey')
+
+	return "Hello "+value
 
 if __name__ == "__main__": 
  app.run(host='0.0.0.0', port=80, debug=True)
