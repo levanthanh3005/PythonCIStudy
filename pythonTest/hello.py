@@ -16,7 +16,7 @@ def index2():
 
 @app.route('/getparams/<int:test_id>',methods=['GET','POST'])
 def get_params(test_id):
-	return "Hello "+test_id
+	return "Hello "+str(test_id)
 
 @app.route('/testpost')
 def testpost():
